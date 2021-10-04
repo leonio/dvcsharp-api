@@ -6,11 +6,11 @@ using Flurl.Http;
 
 namespace badconsole
 {
-    public class BadApiConnector
+    public class BadApiProbe
     {
         private readonly Url _baseUrl;
 
-        public BadApiConnector(string host, int port = 80, bool isHttps = false)
+        public BadApiProbe(string host, int port = 80, bool isHttps = false)
         {
             _baseUrl = new Url
             {

@@ -16,9 +16,9 @@ namespace badconsole
                 e.Cancel = true;
             };
 
-            var connector = new BadApiConnector("localhost", 5000);
+            var probe = new BadApiProbe("localhost", 5000);
 
-            var found = await connector.ProbeAsync(cts.Token);
+            var found = await probe.ProbeAsync(cts.Token);
 
             Console.WriteLine("Did you find a target? {0}", found);
         }

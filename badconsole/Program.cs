@@ -20,6 +20,22 @@ namespace badconsole
 
             var found = await probe.ProbeAsync(cts.Token);
 
+            if (found)
+            {
+                var cmdRunner = new BadApiCommandRunner(probe.BaseUrl);
+                
+                var session = await cmdRunner.InitSessionAsync(cts.Token);
+
+                if (session.IsEstablished)
+                {
+                    await new ListUsersCommand().ExecuteAsync(probe.BaseUrl, session, cts.Token);
+                }
+                else
+                {
+                    Console.WriteLine("Failed to establish session... existing");
+                }
+            }
+
             Console.WriteLine("Did you find a target? {0}", found);
         }
     }

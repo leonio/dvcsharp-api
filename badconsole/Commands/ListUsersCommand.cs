@@ -10,7 +10,6 @@ public class ListUsersCommand : BaseBadCommand
     public static readonly string KeyAllUsers = "AllUsers";
 
     public override async Task<bool> ExecuteAsync(
-        Url baseUrl,
         BadApiSession session,
         CancellationToken token = default)
     {
@@ -29,7 +28,7 @@ public class ListUsersCommand : BaseBadCommand
                     Role = user.role,
                     LastUpdated = user.updatedAt
                 });
-                
+
             Console.WriteLine("User {0} - name:{1}, email:{2}, role:{3}, lastUpdated:{4}", user.id, user.name, user.email, user.role, user.updatedAt);
         }
 

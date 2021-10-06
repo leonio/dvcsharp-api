@@ -28,7 +28,7 @@ namespace badconsole
 
                 if (session.IsEstablished)
                 {
-                    await new ListUsersCommand().ExecuteAsync(probe.BaseUrl, session, cts.Token);
+                    await new ListUsersCommand().ExecuteAsync(session, cts.Token);
                 }
                 else
                 {

@@ -28,7 +28,10 @@ namespace badconsole
 
                 if (session.IsEstablished)
                 {
-                    await new ListUsersCommand().ExecuteAsync(session, cts.Token);
+                    // await new ListUsersCommand().ExecuteAsync(session, cts.Token);
+
+                    // await new XmlBombCommand().ExecuteAsync(session, cts.Token);
+                    await new ImportAnythingCommand().ExecuteAsync(session, cts.Token);
                 }
                 else
                 {

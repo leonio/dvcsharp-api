@@ -31,7 +31,8 @@ namespace badconsole
                     // await new ListUsersCommand().ExecuteAsync(session, cts.Token);
 
                     // await new XmlBombCommand().ExecuteAsync(session, cts.Token);
-                    await new ImportAnythingCommand().ExecuteAsync(session, cts.Token);
+                    // await new ImportAnythingCommand().ExecuteAsync(session, cts.Token);
+                    await new PasswordResetAnyoneCommand().ExecuteAsync(session, cts.Token);
                 }
                 else
                 {

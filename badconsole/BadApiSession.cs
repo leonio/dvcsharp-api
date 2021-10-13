@@ -25,7 +25,7 @@ public class BadApiSession
 
         SessionData[KeyAccessToken] = accessToken;
         SessionData[KeyRole] = role;
-        SessionData[KeyEmail] = email; 
+        SessionData[KeyEmail] = email;
         SessionData[KeyUser] = userName;
 
         IsEstablished = true;
@@ -37,6 +37,33 @@ public class BadApiSession
     }
 
     public string GetEndpoint(string controllerAction) => string.Format("{0}/api/{1}", _baseUrl, controllerAction);
+
+    public ApiUser SelectApiUser()
+    {
+        var users = (List<ApiUser>)SessionData[ListUsersCommand.KeyAllUsers];
+        ApiUser user = null;
+
+        Console.Write("Which user do you want to use? [1 - {0}]? ", users.Count);
+        var valid = false;
+
+        do
+        {
+            var input = Console.ReadLine();
+            if (int.TryParse(input, out int userInt) && userInt > 0 && userInt < users.Count)
+            {
+                userInt--;
+                user = users[userInt];
+                valid = true;
+            }
+            else
+            {
+                Console.WriteLine("next time, how about you choose a real user yeh?");
+                Console.Write("Which user do you want to use? [1 - {0}]? ", users.Count);
+            }
+        } while (!valid);
+
+        return user;
+    }
 
 
     public Dictionary<string, object> SessionData { get; } = new Dictionary<string, object>();

